@@ -1,0 +1,2 @@
+sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i DB_DESTRUCTION_QUERY.sql
+pause
