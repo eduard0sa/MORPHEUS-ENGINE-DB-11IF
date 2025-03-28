@@ -16,6 +16,8 @@ INSERT INTO MACHINE_STATUS (MACHINE_STATUS_NAME) VALUES
 ('Testing'),
 ('Ready');
 
+GO
+
 -- Inserting data for OPERATION_CATEGORY
 INSERT INTO OPERATION_CATEGORY (OPERATION_CATEGORY_NAME) VALUES
 ('Routine Maintenance'),
@@ -28,6 +30,8 @@ INSERT INTO OPERATION_CATEGORY (OPERATION_CATEGORY_NAME) VALUES
 ('System Boot'),
 ('Shutdown'),
 ('Startup');
+
+GO
 
 -- Inserting data for OPERATION_STATUS
 INSERT INTO OPERATION_STATUS (OPERATION_STATUS_NAME) VALUES
@@ -42,6 +46,8 @@ INSERT INTO OPERATION_STATUS (OPERATION_STATUS_NAME) VALUES
 ('Active'),
 ('Waiting');
 
+GO
+
 -- Inserting data for OPERATION_LOGS
 INSERT INTO OPERATION_LOGS (OPERATION_NAME, OPERATION_CATEGORY_ID, OPERATION_STATUS_ID) VALUES
 ('Power Plant System Check', 1, 1),
@@ -54,6 +60,8 @@ INSERT INTO OPERATION_LOGS (OPERATION_NAME, OPERATION_CATEGORY_ID, OPERATION_STA
 ('Sensor Calibration', 7, 9),
 ('Software Update', 8, 7),
 ('System Startup', 9, 8);
+
+GO
 
 -- Inserting data for COUNTRIES
 INSERT INTO COUNTRIES (COUNTRY_NAME, COUNTRY_CAPITAL_CITY) VALUES
@@ -68,12 +76,16 @@ INSERT INTO COUNTRIES (COUNTRY_NAME, COUNTRY_CAPITAL_CITY) VALUES
 ('India', 'New Delhi'),
 ('Brazil', 'Brasília');
 
+GO
+
 -- Inserting data for USER_GENDERS
 INSERT INTO USER_GENDERS (USER_GENDER_NAME) VALUES
 ('Male'),
 ('Female'),
 ('Non-binary'),
 ('Other');
+
+GO
 
 -- Inserting data for USER_JOBS
 INSERT INTO USER_JOBS (USER_JOB_NAME) VALUES
@@ -88,6 +100,8 @@ INSERT INTO USER_JOBS (USER_JOB_NAME) VALUES
 ('Supervisor'),
 ('Developer');
 
+GO
+
 -- Inserting data for USER_ACADEMIC_LEVEL
 INSERT INTO USER_ACADEMIC_LEVEL (USER_ACADEMIC_LEVEL_NAME) VALUES
 ('High School'),
@@ -95,6 +109,8 @@ INSERT INTO USER_ACADEMIC_LEVEL (USER_ACADEMIC_LEVEL_NAME) VALUES
 ('Master'),
 ('PhD'),
 ('Associate Degree');
+
+GO
 
 -- Inserting data for USER_LEVEL
 INSERT INTO USER_LEVEL (USER_LEVEL_NAME) VALUES
@@ -109,18 +125,21 @@ INSERT INTO USER_LEVEL (USER_LEVEL_NAME) VALUES
 ('CEO'),
 ('Intern');
 
+GO
 -- Inserting data for USERS
 INSERT INTO USERS (USER_FIRST_NAME, USER_LAST_NAME, USER_PASSWORD_HASH, USER_EMAIL, USER_PHONENUMBER, USER_PROFILE_PICTURE_PATH, USER_BIRTHDATE, USER_GENDER_ID, USER_COUNTRY_ID, USER_ADRESS, USER_CITIZEN_CARD_NUMBER, USER_SALARY, USER_BANK_ACCOUNT_NUMBER, USER_ACADEMIC_LEVEL_ID, USER_JOB_ID, USER_LEVEL_ID) VALUES
-('John', 'Doe', HASHBYTES('MD5', 'HELLO'), 'john.doe@example.com', 1234567890, '/path/to/pic1.jpg', '1985-01-15', 1, 1, '123 Main St', 123456789, 50000, 111111, 2, 1, 3),
-('Jane', 'Smith', HASHBYTES('MD5', 'HELLO'), 'jane.smith@example.com', 9876543210, '/path/to/pic2.jpg', '1990-04-22', 2, 2, '456 Elm St', 987654321, 60000, 222222, 3, 2, 2),
-('Alice', 'Johnson', HASHBYTES('MD5', 'HELLO'), 'alice.johnson@example.com', 1122334455, '/path/to/pic3.jpg', '1995-07-30', 2, 3, '789 Pine St', 555555555, 55000, 333333, 2, 3, 4),
-('Bob', 'Brown', HASHBYTES('MD5', 'HELLO'), 'bob.brown@example.com', 2233445566, '/path/to/pic4.jpg', '1982-09-12', 1, 4, '321 Oak St', 444444444, 70000, 444444, 4, 4, 5),
-('Charlie', 'Williams', HASHBYTES('MD5', 'HELLO'), 'charlie.williams@example.com', 3344556677, '/path/to/pic5.jpg', '1980-11-05', 1, 5, '654 Birch St', 555555555, 65000, 555555, 5, 5, 6),
-('David', 'Jones', HASHBYTES('MD5', 'HELLO'), 'david.jones@example.com', 4455667788, '/path/to/pic6.jpg', '1992-01-28', 1, 6, '987 Cedar St', 666666666, 52000, 666666, 6, 6, 1),
-('Eva', 'Miller', HASHBYTES('MD5', 'HELLO'), 'eva.miller@example.com', 5566778899, '/path/to/pic7.jpg', '1988-05-20', 2, 7, '321 Birch St', 777777777, 58000, 777777, 3, 7, 2),
-('Frank', 'Davis', HASHBYTES('MD5', 'HELLO'), 'frank.davis@example.com', 6677889900, '/path/to/pic8.jpg', '1994-12-14', 1, 8, '432 Pine St', 888888888, 53000, 888888, 4, 8, 3),
-('Grace', 'Miller', HASHBYTES('MD5', 'HELLO'), 'grace.miller@example.com', 7788990011, '/path/to/pic9.jpg', '1987-06-16', 2, 9, '543 Oak St', 999999999, 71000, 999999, 2, 9, 4),
-('Hank', 'Moore', HASHBYTES('MD5', 'HELLO'), 'hank.moore@example.com', 8899001122, '/path/to/pic10.jpg', '1990-03-03', 1, 10, '876 Maple St', 101010101, 76000, 101010, 5, 10, 5);
+('John', 'Doe', HASHBYTES('MD5', 'wT7z!pB2z#s9'), 'john.doe@example.com', '1234567890', '/path/to/pic1.jpg', '1985-01-15', 1, 1, '123 Main St', 123456789, 50000, 111111, 2, 1, 3),
+('Jane', 'Smith', HASHBYTES('MD5', 'iP4!gY8t9iGv'), 'jane.smith@example.com', '9876543210', '/path/to/pic2.jpg', '1990-04-22', 2, 2, '456 Elm St', 987654321, 60000, 222222, 3, 2, 2),
+('Alice', 'Johnson', HASHBYTES('MD5', 'rB7a&kN5h@zQ'), 'alice.johnson@example.com', '1122334455', '/path/to/pic3.jpg', '1995-07-30', 2, 3, '789 Pine St', 555555555, 55000, 333333, 2, 3, 4),
+('Bob', 'Brown', HASHBYTES('MD5', 'jL3u@pF1yKs'), 'bob.brown@example.com', '2233445566', '/path/to/pic4.jpg', '1982-09-12', 1, 4, '321 Oak St', 444444444, 70000, 444444, 4, 4, 5),
+('Charlie', 'Williams', HASHBYTES('MD5', 'zE8y#pM9qJ1'), 'charlie.williams@example.com', '3344556677', '/path/to/pic5.jpg', '1980-11-05', 1, 5, '654 Birch St', 555555555, 65000, 555555, 5, 5, 6),
+('David', 'Jones', HASHBYTES('MD5', 'uF9r&vQ4jN!u'), 'david.jones@example.com', '4455667788', '/path/to/pic6.jpg', '1992-01-28', 1, 6, '987 Cedar St', 666666666, 52000, 666666, 5, 6, 1),
+('Eva', 'Miller', HASHBYTES('MD5', 'sQ2j#bB7fXk1'), 'eva.miller@example.com', '5566778899', '/path/to/pic7.jpg', '1988-05-20', 2, 7, '321 Birch St', 777777777, 58000, 777777, 3, 7, 2),
+('Frank', 'Davis', HASHBYTES('MD5', 'yV5mC!oL2pQw'), 'frank.davis@example.com', '6677889900', '/path/to/pic8.jpg', '1994-12-14', 1, 8, '432 Pine St', 888888888, 53000, 888888, 4, 8, 3),
+('Grace', 'Miller', HASHBYTES('MD5', 'xH3!gVt8sTz9'), 'grace.miller@example.com', '7788990011', '/path/to/pic9.jpg', '1987-06-16', 2, 9, '543 Oak St', 999999999, 71000, 999999, 2, 9, 4),
+('Hank', 'Moore', HASHBYTES('MD5', 'oN1v#pF5uT!q'), 'hank.moore@example.com', '8899001122', '/path/to/pic10.jpg', '1990-03-03', 1, 10, '876 Maple St', 101010101, 76000, 101010, 5, 10, 5);
+
+GO
 
 -- Inserting data for COMPANY_TYPES
 INSERT INTO COMPANY_TYPES (COMPANY_TYPE_NAME) VALUES
@@ -135,6 +154,8 @@ INSERT INTO COMPANY_TYPES (COMPANY_TYPE_NAME) VALUES
 ('Education'),
 ('Hospitality');
 
+GO
+
 -- Inserting data for COMPANIES
 INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE_ID, COMPANY_COUNTRY_ID, COMPANY_CEO_ID, COMPANY_CAPITAL) VALUES
 ('TechCorp', 1, 1, 1, 5000000),
@@ -148,6 +169,8 @@ INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE_ID, COMPANY_COUNTRY_ID, COMPAN
 ('EduCorp', 9, 9, 9, 10000000),
 ('HospitaLife', 10, 10, 10, 12000000);
 
+GO
+
 -- Inserting data for USER_REL_COMPANY
 INSERT INTO USER_REL_COMPANY (USER_COMPANY_ID, USER_ID) VALUES
 (1, 1),
@@ -160,6 +183,8 @@ INSERT INTO USER_REL_COMPANY (USER_COMPANY_ID, USER_ID) VALUES
 (8, 8),
 (9, 9),
 (10, 10);
+
+GO
 
 -- Inserting data for POWER_PLANT_TYPE
 INSERT INTO POWER_PLANT_TYPE (POWER_PLANT_TYPE_NAME) VALUES

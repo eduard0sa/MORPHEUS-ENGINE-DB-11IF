@@ -1,12 +1,17 @@
+@echo off
+set /p INSTANCE="ENTER SQL SERVER INSTANCE: "
+set /p USERNAME="ENTER USERNAME: "
+for /f "delims=" %%p in ('powershell -Command "$pword = Read-Host 'ENTER PASSWORD' -AsSecureString; $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)"') do set "password=%%p"
+
 cd SQL/DB_BUILD
-sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i DATABASE_BUILD_QUERY.sql
-REM sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i DATA_INSERTION.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i DATABASE_BUILD_QUERY.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i DATA_INSERTION.sql
 cd ..
 cd GENERIC_VIEWS
-sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i VIEWS_CREATED.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i VIEWS_CREATED.sql
 cd ..
 cd FUNCTIONS
-sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i MATH_FUNCTIONS.sql
-sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i ENERGY_MGMT_FUNCTIONS.sql
-sqlcmd -S SI31004\SQLEXPRESS -U sa -P phc2024 -i USER_MGMT_FUNCTIONS.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i MATH_FUNCTIONS.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i ENERGY_MGMT_FUNCTIONS.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i USER_MGMT_FUNCTIONS.sql
 pause
