@@ -1,8 +1,13 @@
+--==================================================================================================================================
+--============= USER_MGMT_FUNCTIONS.sql ============================================================================================
+--============= Contém funções largamente utilizadas na obtenção de dados relativos aos utilizadores da plataforma =================
+--==================================================================================================================================
+
 USE [_MORPHEUS_ENGINE_] -- DB CONNECTION
 GO
 
 -- FUNÇÃO UTILIZADA PARA ENCRIPTAR UMA STRING (PASSWORD), GERANDO UMA HASH, A PARTIR DE QUALQUER ALGORITMO DE ENCRIPTAÇÃO VÁLIDO
-CREATE FUNCTION ENCRYPT_PASSWORD ( @string varchar(100), @encryption_alg varchar(10) )
+CREATE FUNCTION FN_ENCRYPT_PASSWORD ( @string varchar(100), @encryption_alg varchar(10) )
 RETURNS VARBINARY
 BEGIN
 	RETURN HASHBYTES(@encryption_alg, @string)
