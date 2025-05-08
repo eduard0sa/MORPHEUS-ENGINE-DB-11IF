@@ -1,4 +1,4 @@
-2--==================================================================================================================================
+--==================================================================================================================================
 --============= DATA_INSERTION.sql =================================================================================================
 --============= SCRIPT DE INSERÇÃO DE DADOS-EXEMPLO EM TODAS AS TABELAS DA BASE DE DADOS ===========================================
 --==================================================================================================================================
@@ -78,12 +78,7 @@ INSERT INTO USER_GENDERS (USER_GENDER_NAME) VALUES
 ('Female'),
 ('Non-Binary'),
 ('Other'),
-('Prefer not to say'),
-('Male'),
-('Female'),
-('Non-Binary'),
-('Other'),
-('Female');
+('Prefer not to say')
 GO
 
 INSERT INTO USER_JOBS (USER_JOB_NAME) VALUES
@@ -141,11 +136,11 @@ INSERT INTO USERS (
 ('Carol', 'Clark', 0x434343, 'carol.clark@example.com', '3456789012', 'C:\Pics\carol.jpg', '1990-03-03', 3, 3, '345 C St', 1003, 65000, 2003, 5, 3, 4),
 ('David', 'Davis', 0x444444, 'david.davis@example.com', '4567890123', 'C:\Pics\david.jpg', '1995-04-04', 4, 4, '456 D St', 1004, 70000, 2004, 1, 4, 1),
 ('Eva', 'Edwards', 0x454545, 'eva.edwards@example.com', '5678901234', 'C:\Pics\eva.jpg', '1988-05-05', 5, 5, '567 E St', 1005, 75000, 2005, 2, 5, 2),
-('Frank', 'Foster', 0x464646, 'frank.foster@example.com', '6789012345', 'C:\Pics\frank.jpg', '1982-06-06', 6, 6, '678 F St', 1006, 80000, 2006, 3, 6, 4),
-('Grace', 'Green', 0x474747, 'grace.green@example.com', '7890123456', 'C:\Pics\grace.jpg', '1979-07-07', 7, 7, '789 G St', 1007, 85000, 2007, 4, 7, 1),
-('Henry', 'Harris', 0x484848, 'henry.harris@example.com', '8901234567', 'C:\Pics\henry.jpg', '1987-08-08', 8, 8, '890 H St', 1008, 90000, 2008, 5, 8, 3),
-('Ivy', 'Irwin', 0x494949, 'ivy.irwin@example.com', '9012345678', 'C:\Pics\ivy.jpg', '1992-09-09', 9, 9, '901 I St', 1009, 95000, 2009, 6, 9, 2),
-('Jack', 'Jones', 0x4A4A4A, 'jack.jones@example.com', '0123456789', 'C:\Pics\jack.jpg', '1996-10-10', 10, 10, '012 J St', 1010, 100000, 2010, 7, 10, 1),
+('Frank', 'Foster', 0x464646, 'frank.foster@example.com', '6789012345', 'C:\Pics\frank.jpg', '1982-06-06', 1, 6, '678 F St', 1006, 80000, 2006, 3, 6, 4),
+('Grace', 'Green', 0x474747, 'grace.green@example.com', '7890123456', 'C:\Pics\grace.jpg', '1979-07-07', 2, 7, '789 G St', 1007, 85000, 2007, 4, 7, 1),
+('Henry', 'Harris', 0x484848, 'henry.harris@example.com', '8901234567', 'C:\Pics\henry.jpg', '1987-08-08', 3, 8, '890 H St', 1008, 90000, 2008, 5, 8, 3),
+('Ivy', 'Irwin', 0x494949, 'ivy.irwin@example.com', '9012345678', 'C:\Pics\ivy.jpg', '1992-09-09', 4, 9, '901 I St', 1009, 95000, 2009, 6, 9, 2),
+('Jack', 'Jones', 0x4A4A4A, 'jack.jones@example.com', '0123456789', 'C:\Pics\jack.jpg', '1996-10-10', 5, 10, '012 J St', 1010, 100000, 2010, 7, 10, 1),
 ('Kelly', 'King', 0x4B4B4B, 'kelly.king@example.com', '1122334455', 'C:\Pics\kelly.jpg', '1993-11-11', 1, 1, '112 K St', 1011, 105000, 2011, 8, 1, 2);
 GO
 

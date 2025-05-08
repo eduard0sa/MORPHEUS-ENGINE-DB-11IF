@@ -1,7 +1,7 @@
 @echo off
 REM ======================================================================================================================================================
 REM ============================= DB_CONSTRUCTION.bat ====================================================================================================
-REM ============================= Script que automatiza a criação da BD, executando ordenadamente todos os scripts de criação. ===========================
+REM ============================= Script que automatiza a criaï¿½ï¿½o da BD, executando ordenadamente todos os scripts de criaï¿½ï¿½o. ===========================
 REM ======================================================================================================================================================
 
 set /p INSTANCE="ENTER SQL SERVER INSTANCE: "
@@ -18,6 +18,7 @@ sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i VEHICLE_SPACECRAFT_VIEWS.sql
 sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i POWER_MGMT_VIEWS.sql
 sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i LOGISTICS_MGMT_VIEW.sql
 sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i CITY_MGMT_VIEWS.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i COMPANY_MGMT_VIEWS.sql
 cd ..
 cd FUNCTIONS
 sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i MATH_FUNCTIONS.sql
@@ -26,4 +27,5 @@ sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i USER_MGMT_FUNCTIONS.sql
 cd..
 cd STORED_PROCEDURES
 sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i DATA_INSERTION_PROCEDURES.sql
+sqlcmd -S %INSTANCE% -U %USERNAME% -P %PASSWORD% -i DATA_QUERY_PROCEDURES.sql
 pause
