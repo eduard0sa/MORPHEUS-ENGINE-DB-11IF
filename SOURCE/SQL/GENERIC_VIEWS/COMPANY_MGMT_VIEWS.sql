@@ -1,13 +1,13 @@
 --==================================================================================================================================
---============= USER_VIEWS.sql =====================================================================================================
---============= Aqui são criadas views para a obtenção de dados do utilizador. =====================================================
+--============= COMPANY_MGMY_VIEWS.sql =============================================================================================
+--============= Aqui são criadas views para a obtenção de dados das empresas registadas. ===========================================
 --==================================================================================================================================
 
 USE [_MORPHEUS_ENGINE_] -- DB CONNECTION
 GO
 
 --ESTA VIEW CONCENTRA OS DADOS DE CADA UTILIZADOR;
-CREATE VIEW VW_USER_CARACTERISTICS AS (SELECT USER_ID,
+CREATE VIEW VW_COMPANY_DATA AS (SELECT USER_ID,
 USER_FIRST_NAME,
  USER_LAST_NAME,
  USER_PASSWORD_HASH,
@@ -23,7 +23,6 @@ USER_FIRST_NAME,
  USER_CITIZEN_CARD_NUMBER,
  USER_SALARY,
  USER_BANK_ACCOUNT_NUMBER,
- USER_ACADEMIC_LEVEL.USER_ACADEMIC_LEVEL_ID,
  USER_ACADEMIC_LEVEL.USER_ACADEMIC_LEVEL_NAME,
  USER_JOBS.USER_JOB_NAME,
  USER_LEVEL.USER_LEVEL_NAME
