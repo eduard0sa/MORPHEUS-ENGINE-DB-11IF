@@ -141,7 +141,8 @@ INSERT INTO USERS (
 ('Henry', 'Harris', 0x484848, 'henry.harris@example.com', '8901234567', 'C:\Pics\henry.jpg', '1987-08-08', 3, 8, '890 H St', 1008, 90000, 2008, 5, 8, 3),
 ('Ivy', 'Irwin', 0x494949, 'ivy.irwin@example.com', '9012345678', 'C:\Pics\ivy.jpg', '1992-09-09', 4, 9, '901 I St', 1009, 95000, 2009, 6, 9, 2),
 ('Jack', 'Jones', 0x4A4A4A, 'jack.jones@example.com', '0123456789', 'C:\Pics\jack.jpg', '1996-10-10', 5, 10, '012 J St', 1010, 100000, 2010, 7, 10, 1),
-('Kelly', 'King', 0x4B4B4B, 'kelly.king@example.com', '1122334455', 'C:\Pics\kelly.jpg', '1993-11-11', 1, 1, '112 K St', 1011, 105000, 2011, 8, 1, 2);
+('Kelly', 'King', 0x4B4B4B, 'kelly.king@example.com', '1122334455', 'C:\Pics\kelly.jpg', '1993-11-11', 1, 1, '112 K St', 1011, 105000, 2011, 8, 1, 2),
+('Grant', 'Sanderson', 0x4B4B4B, 'grant.sanderson@example.com', '192168301', 'C:\Pics\grant.jpg', '1993-11-11', 1, 1, '112 K St', 1011, 105000, 2011, 8, 2, 4);
 GO
 
 INSERT INTO COMPANY_TYPES (COMPANY_TYPE_NAME) VALUES
@@ -180,7 +181,9 @@ INSERT INTO USER_REL_COMPANY (USER_COMPANY_ID, USER_ID) VALUES
 (7, 7),
 (8, 8),
 (9, 9),
-(10, 10);
+(10, 10),
+(1, 11),
+(3, 12);
 GO
 
 INSERT INTO POWER_PLANT_TYPE (POWER_PLANT_TYPE_NAME) VALUES
