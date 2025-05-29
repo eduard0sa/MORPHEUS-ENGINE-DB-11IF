@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Manutenção da central ''' + @POWER_PLANT_NAME + '''</title>
+</head>
+<body style="margin:0; padding:0; background-color:#ffffff; font-family:Arial, sans-serif; color:#131314;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">
+          <table width="600" cellpadding="30" cellspacing="0" style="background-color: #131314; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+            <tr>
+              <td align="center">
+                <img src="https://cicpt-my.sharepoint.com/personal/a16606_cic_pt/Documents/11%c2%ba%20ANO/BD/MORPHEUS%20ENGINE/RESOURCE%20HOSTING/MORPHEUS_ENGINE_FLAT.png?Web=1" alt="Morpheus Engine Logo" style="width: 100%;">
+                <hr/>
+              </td>
+            </tr>
+          </table>
+        </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="30" cellspacing="0" style="background-color: #f9f9f9; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+          <tr>
+            <td>
+              <h1 style="margin-top:0; font-size:24px; color:#131314; font-weight:600; text-align:center;">RELATÓRIO DE MANUTENÇÃO DA CENTRAL ''' + @POWER_PLANT_NAME + '''</h1>
+
+              <p style="line-height:1.6;">Bom dia, exmo(a) CEO da <strong>' + @POWER_PLANT_COMPANY_NAME + '</strong>, Sr(a). <strong>' + @POWER_PLANT_CEO_NAME + '</strong>,</p>
+
+              <p style="line-height:1.6;">Enviamo-lhe o relatório da manutenção realizada á central elétrica' + @POWER_PLANT_NAME + ', ocorrida a ' + CAST(DAY(GETDATE()) AS VARCHAR) + '/' + CAST(MONTH(GETDATE()) AS VARCHAR) + '/' + CAST(YEAR(GETDATE()) AS VARCHAR) + ', '
+                + CAST(DATEPART(HOUR, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MINUTE, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(SECOND, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MILLISECOND, GETDATE()) AS VARCHAR) + '<strong>'</p>
+
+              <h2 style="font-size:18px; color:#131314; border-bottom:1px solid #eeeeee; padding-bottom:6px;">Informação sobre a manutenção</h2>
+              <ul style="list-style:none; padding-left:0; line-height:1.8;">
+                <li><strong>Central :</strong> ' + @POWER_PLANT_NAME + '</li>
+                <li><strong>Data de Manutenção :</strong> ' + @MAINTENANCE_DATE + '</li>
+                <li><strong>Descrição:</strong> ' + @MAINTENANCE_DESCRIPTION + '</li>
+                <li><strong>Tecnico:</strong> ' + @MAINTENANCE_TECHNITIAN_NAME + '</li>
+                <li><strong>Resultados:</strong> ' + @MAINTENANCE_RESULTS_INFO + '</li>
+              </ul>
+              <hr/>
+              <p style="margin-top:30px;">Com os melhores cumprimentos,</p>
+              <p><strong>A equipa Morpheus Engine</strong></p>
+
+              <p style="font-size:12px; color:#131314; margin-top:40px; border-top:1px solid #dddddd; padding-top:20px;">
+                Esta mensagem foi gerada automaticamente pelos sistemas informáticos da Morpheus Engine. Por favor, não responda a este e-mail.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

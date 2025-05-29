@@ -148,15 +148,22 @@ AFTER INSERT
 AS
 BEGIN
     -----------------------------------------------------------------------
+
+    DECLARE @POWER_PLANT_NAME VARCHAR(50)
+    DECLARE @POWER_PLANT_COMPANY_ID VARCHAR(100)
+    DECLARE @POWER_PLANT_COMPANY_NAME VARCHAR(100)
+    DECLARE @POWER_PLANT_CEO_NAME VARCHAR(100);
+
+    -----------------------------------------------------------------------
     DECLARE @LOG_ID INT
     DECLARE @OPERATION_ID INT
     DECLARE @POWER_PLANT_ID INT
     DECLARE @MAINTENANCE_DESCRIPTION VARCHAR(MAX)
     DECLARE @MAINTENANCE_DATE DATE
     DECLARE @MAINTENANCE_TECHNITIAN INT
+    DECLARE @MAINTENANCE_TECHNITIAN_NAME VARCHAR(100)
     DECLARE @MAINTENANCE_RESULTS_INFO VARBINARY(255)
-    -----------------------------------------------------------------------
-    DECLARE @POWER_PLANT_NAME VARCHAR(50)
+    
     -----------------------------------------------------------------------
     DECLARE @SUBJECT VARCHAR(255)
     DECLARE @BODY VARCHAR(MAX)
@@ -172,6 +179,7 @@ BEGIN
         MAINTENANCE_TECHNITIAN_ID,
         MAINTENANCE_RESULTS_INFO
         FROM inserted (NOLOCK)
+        WHERE POWER_PLANT_ID = inserted.POWER_PLANT_ID
     )
 
     OPEN _cursor
@@ -183,17 +191,86 @@ BEGIN
         FROM POWER_PLANTS (NOLOCK)
         WHERE POWER_PLANT_ID = @POWER_PLANT_ID
     )
+    SET @POWER_PLANT_COMPANY_ID = (
+        SELECT COMPANY_ID
+        FROM POWER_PLANTS (NOLOCK)
+        INNER JOIN COMPANIES ON COMPANY_ID = POWER_PLANT_COMPANY_ID
+        WHERE POWER_PLANT_ID = @POWER_PLANT_ID
+    )
+    SET @POWER_PLANT_COMPANY_NAME = (
+        SELECT COMPANY_NAME
+        FROM COMPANIES (NOLOCK)
+        WHERE COMPANY_ID = @POWER_PLANT_COMPANY_ID
+    )
+    SET @POWER_PLANT_CEO_NAME = (
+        SELECT USERS.USER_FIRST_NAME + ' ' + USERS.USER_LAST_NAME
+        FROM USERS (NOLOCK)
+        INNER JOIN COMPANIES ON COMPANIES.COMPANY_CEO_ID = USERS.USER_ID
+        WHERE COMPANIES.COMPANY_ID = @POWER_PLANT_COMPANY_ID
+    )
+    SET @MAINTENANCE_TECHNITIAN_NAME = (
+        SELECT USERS.USER_FIRST_NAME + ' ' + USERS.USER_LAST_NAME
+        FROM USERS (NOLOCK)
+        WHERE USERS.USER_ID = @MAINTENANCE_TECHNITIAN
+    )
+
     SET @SUBJECT = 'Maintenace Report for <' + CAST(@POWER_PLANT_NAME AS VARCHAR) + '> Power Plant'
 
-    SET @BODY = '<html>
-    <body>
-    <h1>Power Plant Maintenance Report</h1>
-    <p>Dear Team,</p>
-    <p>Maintenance done in the following power plant</p>
-    <p>Details:</p>
-    <ul>
-        <li>Log ID: '
-    SET @BODY = @BODY + CAST(@LOG_ID AS VARCHAR) + '</li>'
+    SET @BODY = '<!DOCTYPE html>
+        <html lang="pt">
+        <head>
+        <meta charset="UTF-8">
+        <title>Relatório de Manutenção da central ''' + @POWER_PLANT_NAME + '''</title>
+        </head>
+        <body style="margin:0; padding:0; background-color:#ffffff; font-family:Arial, sans-serif; color:#131314;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center">
+                <table width="600" cellpadding="30" cellspacing="0" style="background-color: #131314; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+                    <tr>
+                    <td align="center">
+                        <img src="https://cicpt-my.sharepoint.com/personal/a16606_cic_pt/Documents/11%c2%ba%20ANO/BD/MORPHEUS%20ENGINE/RESOURCE%20HOSTING/MORPHEUS_ENGINE_FLAT.png?Web=1" alt="Morpheus Engine Logo" style="width: 100%;">
+                        <hr/>
+                    </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+            <tr>
+            <td align="center">
+                <table width="600" cellpadding="30" cellspacing="0" style="background-color: #f9f9f9; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+                <tr>
+                    <td>
+                    <h1 style="margin-top:0; font-size:24px; color:#131314; font-weight:600; text-align:center;">RELATÓRIO DE MANUTENÇÃO DA CENTRAL ''' + @POWER_PLANT_NAME + '''</h1>
+
+                    <p style="line-height:1.6;">Bom dia, exmo(a) CEO da <strong>' + @POWER_PLANT_COMPANY_NAME + '</strong>, Sr(a). <strong>' + @POWER_PLANT_CEO_NAME + '</strong>,</p>
+
+                    <p style="line-height:1.6;">Enviamo-lhe o relatório da manutenção realizada á central elétrica' + @POWER_PLANT_NAME + ', ocorrida a ' + CAST(DAY(GETDATE()) AS VARCHAR) + '/' + CAST(MONTH(GETDATE()) AS VARCHAR) + '/' + CAST(YEAR(GETDATE()) AS VARCHAR) + ', '
+                        + CAST(DATEPART(HOUR, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MINUTE, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(SECOND, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MILLISECOND, GETDATE()) AS VARCHAR) + '<strong></p>
+
+                    <h2 style="font-size:18px; color:#131314; border-bottom:1px solid #eeeeee; padding-bottom:6px;">Informação sobre a manutenção</h2>
+                    <ul style="list-style:none; padding-left:0; line-height:1.8;">
+                        <li><strong>Central :</strong> ' + @POWER_PLANT_NAME + '</li>
+                        <li><strong>Data de Manutenção :</strong> ' + CAST(@MAINTENANCE_DATE AS VARCHAR) + '</li>
+                        <li><strong>Descrição:</strong> ' + @MAINTENANCE_DESCRIPTION + '</li>
+                        <li><strong>Tecnico:</strong> ' + @MAINTENANCE_TECHNITIAN_NAME + '</li>
+                        <li><strong>Resultados:</strong> ' + CAST(@MAINTENANCE_RESULTS_INFO AS VARCHAR) + '</li>
+                    </ul>
+                    <hr/>
+                    <p style="margin-top:30px;">Com os melhores cumprimentos,</p>
+                    <p><strong>A equipa Morpheus Engine</strong></p>
+
+                    <p style="font-size:12px; color:#131314; margin-top:40px; border-top:1px solid #dddddd; padding-top:20px;">
+                        Esta mensagem foi gerada automaticamente pelos sistemas informáticos da Morpheus Engine. Por favor, não responda a este e-mail.
+                    </p>
+                    </td>
+                </tr>
+                </table>
+            </td>
+            </tr>
+        </table>
+        </body>
+        </html>'
 
     SET @EMAIL = (
         SELECT USERS.USER_EMAIL
@@ -202,6 +279,8 @@ BEGIN
         INNER JOIN USERS ON COMPANIES.COMPANY_CEO_ID = USERS.USER_ID
         WHERE POWER_PLANTS.POWER_PLANT_ID = @POWER_PLANT_ID
     )
+
+    PRINT(@BODY);
 
     EXEC msdb.dbo.sp_send_dbmail
         @profile_name = 'MORPHEUS_ENGINE_NOREPLY_BOT',
@@ -226,13 +305,19 @@ ON LIFE_SUPPORT_SYSTEM_MAINTENANCE_LOGS
 AFTER INSERT
 AS
 BEGIN
+    DECLARE @LSS_COMPANY_NAME VARCHAR(100)
+    DECLARE @LSS_COMPANY_CEO_NAME VARCHAR(100)
+
     DECLARE @LOG_ID INT
     DECLARE @OPERATION_ID INT
     DECLARE @SYSTEM_ID INT
     DECLARE @MAINTENANCE_DESCRIPTION VARCHAR(MAX)
     DECLARE @MAINTENANCE_DATE DATE
     DECLARE @MAINTENANCE_TECHNITIAN INT
+    DECLARE @MAINTENANCE_TECHNITIAN_NAME VARCHAR(100)
     DECLARE @MAINTENANCE_RESULTS_INFO VARBINARY(255)
+
+    DECLARE @NEXT_MAINTENANCE_DATE DATE
 
     DECLARE @SYSTEM_NAME VARCHAR(50)
     DECLARE @SUBJECT VARCHAR(255)
@@ -260,20 +345,89 @@ BEGIN
         FROM LIFE_SUPPORT_SYSTEMS (NOLOCK)
         WHERE SYSTEM_ID = @SYSTEM_ID
     )
+    SET @LSS_COMPANY_NAME = (
+        SELECT COMPANY_NAME
+        FROM COMPANIES (NOLOCK)
+        INNER JOIN LIFE_SUPPORT_SYSTEMS ON LIFE_SUPPORT_SYSTEMS.SYSTEM_COMPANY_ID = COMPANIES.COMPANY_ID
+        WHERE LIFE_SUPPORT_SYSTEMS.SYSTEM_ID = @SYSTEM_ID
+    )
+    SET @LSS_COMPANY_CEO_NAME = (
+        SELECT USERS.USER_FIRST_NAME + ' ' + USERS.USER_LAST_NAME
+        FROM USERS (NOLOCK)
+        INNER JOIN COMPANIES ON COMPANIES.COMPANY_CEO_ID = USERS.USER_ID
+        WHERE COMPANIES.COMPANY_NAME = @LSS_COMPANY_NAME
+    )
+
+    SET @MAINTENANCE_TECHNITIAN_NAME = (
+        SELECT USERS.USER_FIRST_NAME + ' ' + USERS.USER_LAST_NAME
+        FROM USERS (NOLOCK)
+        WHERE USERS.USER_ID = @MAINTENANCE_TECHNITIAN
+    )
+    SET @NEXT_MAINTENANCE_DATE = (
+        SELECT SYSTEM_NEXT_MAINTENANCE_DATE
+        FROM LIFE_SUPPORT_SYSTEMS (NOLOCK)
+        WHERE SYSTEM_ID = @SYSTEM_ID
+    )
     
     SET @SUBJECT = 'Maintenace Report for <' + CAST(@SYSTEM_NAME AS VARCHAR) + '> Life Support System'
 
-    SET @BODY = '<html>
-    <body>
-    <h1>Life Support System Maintenance Report</h1>
-    <p>Dear Team,</p>
-    <p>Maintenance done in the following life support system</p>
-    <p>Details:</p>
-    <ul>
-        <li>Log ID: '
-    
-    SET @BODY = @BODY + CAST(@LOG_ID AS VARCHAR) + '</li></body></html>'
+    SET @BODY = '<!DOCTYPE html>
+        <html lang="pt">
+        <head>
+        <meta charset="UTF-8">
+        <title>Relatório de Manutenção do Sistema de Suporte de Vida ''' + @SYSTEM_NAME + '''</title>
+        </head>
+        <body style="margin:0; padding:0; background-color:#ffffff; font-family:Arial, sans-serif; color:#131314;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center">
+                <table width="600" cellpadding="30" cellspacing="0" style="background-color: #131314; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+                    <tr>
+                    <td align="center">
+                        <img src="https://cicpt-my.sharepoint.com/personal/a16606_cic_pt/Documents/11%c2%ba%20ANO/BD/MORPHEUS%20ENGINE/RESOURCE%20HOSTING/MORPHEUS_ENGINE_FLAT.png?Web=1" alt="Morpheus Engine Logo" style="width: 100%;">
+                        <hr/>
+                    </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+            <tr>
+            <td align="center">
+                <table width="600" cellpadding="30" cellspacing="0" style="background-color: #f9f9f9; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+                <tr>
+                    <td>
+                    <h1 style="margin-top:0; font-size:24px; color:#131314; font-weight:600; text-align:center;">RELATÓRIO DE MANUTENÇÃO DO SISTEMA DE SUPORTE DE VIDA (SSV) ''' + @SYSTEM_NAME + '''</h1>
 
+                    <p style="line-height:1.6;">Bom dia, exmo(a) CEO da <strong>' + @LSS_COMPANY_NAME + '</strong>, Sr(a). <strong>' + @LSS_COMPANY_CEO_NAME + '</strong>,</p>
+
+                    <p style="line-height:1.6;">Enviamo-lhe o relatório da manutenção realizada AO SSV' + @SYSTEM_NAME + ', ocorrida a ' + CAST(DAY(GETDATE()) AS VARCHAR) + '/' + CAST(MONTH(GETDATE()) AS VARCHAR) + '/' + CAST(YEAR(GETDATE()) AS VARCHAR) + ', '
+                        + CAST(DATEPART(HOUR, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MINUTE, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(SECOND, GETDATE()) AS VARCHAR) + ':' + CAST(DATEPART(MILLISECOND, GETDATE()) AS VARCHAR) + '<strong></p>
+
+                    <h2 style="font-size:18px; color:#131314; border-bottom:1px solid #eeeeee; padding-bottom:6px;">Informação sobre a manutenção</h2>
+                    <ul style="list-style:none; padding-left:0; line-height:1.8;">
+                        <li><strong>Sistema :</strong> ' + @SYSTEM_NAME + '</li>
+                        <li><strong>Data de Manutenção :</strong> ' + CAST(@MAINTENANCE_DATE AS VARCHAR) + '</li>
+                        <li><strong>Descrição:</strong> ' + @MAINTENANCE_DESCRIPTION + '</li>
+                        <li><strong>Tecnico:</strong> ' + @MAINTENANCE_TECHNITIAN_NAME + '</li>
+                        <li><strong>Resultados:</strong> ' + CAST(@MAINTENANCE_RESULTS_INFO AS VARCHAR) + '</li>
+                        <li><strong>Data da proxima Manutenção agendada:</strong> ' + CAST(@NEXT_MAINTENANCE_DATE AS VARCHAR) + '</li>
+                    </ul>
+                    <hr/>
+                    <p style="margin-top:30px;">Com os melhores cumprimentos,</p>
+                    <p><strong>A equipa Morpheus Engine</strong></p>
+
+                    <p style="font-size:12px; color:#131314; margin-top:40px; border-top:1px solid #dddddd; padding-top:20px;">
+                        Esta mensagem foi gerada automaticamente pelos sistemas informáticos da Morpheus Engine. Por favor, não responda a este e-mail.
+                    </p>
+                    </td>
+                </tr>
+                </table>
+            </td>
+            </tr>
+        </table>
+        </body>
+        </html>'
+    
     SET @EMAIL = (
         SELECT USERS.USER_EMAIL
         FROM LIFE_SUPPORT_SYSTEMS (NOLOCK)
@@ -281,6 +435,8 @@ BEGIN
         INNER JOIN USERS ON COMPANIES.COMPANY_CEO_ID = USERS.USER_ID
         WHERE LIFE_SUPPORT_SYSTEMS.SYSTEM_ID = @SYSTEM_ID
     )
+
+    PRINT(@BODY);
 
     EXEC msdb.dbo.sp_send_dbmail
         @profile_name = 'MORPHEUS_ENGINE_NOREPLY_BOT',
