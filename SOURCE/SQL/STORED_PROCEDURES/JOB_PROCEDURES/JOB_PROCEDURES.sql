@@ -6,7 +6,8 @@
 USE [_MORPHEUS_ENGINE_] -- DB CONNECTION
 GO
 
-ALTER PROCEDURE GENERATE_AND_SEND_POWER_FLUX_REPORT
+--PROCEDURE PARA GERAR E ENVIAR RELATÓRIO DE FLUXO DE ENERGIA DAS CENTRAIS ELÉTRICAS, VIA EMAIL, PARA OS CEO'S DE TODAS AS EMPRESAS DETENTORAS DAS CENTRAIS ELÉTRICAS.
+CREATE PROCEDURE GENERATE_AND_SEND_POWER_FLUX_REPORT
 AS
 BEGIN
     DECLARE @POWER_PLANTS_COUNT INT = (SELECT COUNT(POWER_PLANT_ID) FROM POWER_PLANTS (NOLOCK))
@@ -129,46 +130,59 @@ BEGIN
             <meta charset="UTF-8">
             <title>Relatório da Central Elétrica</title>
             </head>
-            <body style="margin:0; padding:0; background-color:#1E1E2F; font-family:Arial, sans-serif; color:#E0E0E0;">
-            <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
+            <body style="margin:0; padding:0; background-color:#ffffff; font-family:Arial, sans-serif; color:#131314;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center">
+                    <table width="600" cellpadding="30" cellspacing="0" style="background-color: #131314; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
+                        <tr>
+                        <td align="center">
+                            <img src="https://cicpt-my.sharepoint.com/personal/a16606_cic_pt/Documents/11%c2%ba%20ANO/BD/MORPHEUS%20ENGINE/RESOURCE%20HOSTING/MORPHEUS_ENGINE_FLAT.png?Web=1" alt="Morpheus Engine Logo" width="600">
+                            <hr/>
+                        </td>
+                        </tr>
+                    </table>
+                    </td>
+                </tr>
                 <tr>
                 <td align="center">
-                    <table width="600" cellpadding="20" cellspacing="0" style="background-color:#2A2A40; border-radius:12px; box-shadow:0 0 15px rgba(0,188,212,0.2); text-align:left;">
+                    <table width="600" cellpadding="30" cellspacing="0" style="background-color: #f9f9f9; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:left;">
                     <tr>
                         <td>
-                        <h1 style="text-align:center; color:#00BCD4; margin-top:0; font-size:28px; letter-spacing:1px;">Power Plant Report</h1>
-                        <p style="line-height:1.6;">Bom dia, exmo(a) CEO da <strong style="color:#00BCD4;">' + @POWER_PLANT_COMPANY_NAME + '</strong>, Sr(a). <strong style="color:#00BCD4;">' + @POWER_PLANT_CEO + '</strong>,</p>
-                        <p style="line-height:1.6;">Enviamo-lhe o relatório energético relativo à central <strong style="color:#00BCD4;">' + @POWER_PLANT_NAME + '</strong>, detida e gerida pela sua empresa.</p>
+                        <h1 style="margin-top:0; font-size:24px; color:#131314; font-weight:600; text-align:center;">RELATORIO DE PRODUÇÃO DE ENERGIA</h1>
+
+                        <p style="line-height:1.6;">Bom dia, exmo(a) CEO da <strong>' + @POWER_PLANT_COMPANY_NAME + '</strong>, Sr(a). <strong>' + @POWER_PLANT_CEO + '</strong>,</p>
+
+                        <p style="line-height:1.6;">Enviamo-lhe o relatório energético relativo à central <strong>' + @POWER_PLANT_NAME + '</strong>, detida e gerida pela sua empresa.</p>
+
                         <p style="line-height:1.6;">Este relatório contém informações sobre a produção, consumo e armazenamento de energia da sua central, bem como detalhes sobre a sua manutenção.</p>
-                        <table width="100%" cellpadding="15" cellspacing="0" style="background-color:#33334D; border-radius:8px; margin:25px 0;">
-                            <tr>
-                            <td>
-                                <h2 style="margin-top:0; color:#00ACC1;">Informação da central</h2>
-                                <ul style="list-style:none; padding-left:0; margin:0; line-height:1.6;">
-                                <li><strong>ID:</strong> ' + CAST(@POWER_PLANT_ID AS VARCHAR) + '</li>
-                                <li><strong>Nome:</strong> ' + CAST(@POWER_PLANT_NAME AS VARCHAR) + '</li>
-                                <li><strong>Tipo:</strong> ' + CAST(@POWER_PLANT_TYPE_NAME AS VARCHAR) + '</li>
-                                <li><strong>Status:</strong> ' + CAST(@POWER_PLANT_STATUS_ID AS VARCHAR) + ' - ' + CAST(@POWER_PLANT_STATUS_NAME AS VARCHAR) + '</li>
-                                <li><strong>Company ID:</strong> ' + CAST(@POWER_PLANT_COMPANY_ID AS VARCHAR) + '</li>
-                                <li><strong>Data de Instalação:</strong> ' + CAST(@POWER_PLANT_INSTALLATION_DATE AS VARCHAR) + '</li>
-                                <li><strong>Localização:</strong> ' + CAST(@POWER_PLANT_LOCATION AS VARCHAR) + '</li>
-                                <li><strong>Capacidade Máxima:</strong> ' + CAST(@POWER_PLANT_MAX_OUTPUT_CAPACITY AS VARCHAR) + '</li>
-                                <li><strong>Última Manutenção:</strong> ' + CAST(@POWER_PLANT_LAST_MAINTENANCE_DATE AS VARCHAR) + '</li>
-                                <li><strong>Próxima Manutenção:</strong> ' + CAST(@POWER_PLANT_NEXT_MAINTENANCE_DATE AS VARCHAR) + '</li>
-                                </ul>
-                            </td>
-                            </tr>
-                        </table>
-                        <h2 style="color:#00BCD4;">Balanço energético</h2>
-                        <ul style="list-style:none; padding-left:0; line-height:1.6;">
+
+                        <h2 style="font-size:18px; color:#131314; border-bottom:1px solid #eeeeee; padding-bottom:6px;">Informação da central</h2>
+                        <ul style="list-style:none; padding-left:0; margin:15px 0; line-height:1.8;">
+                            <li><strong>ID:</strong> ' + CAST(@POWER_PLANT_ID AS VARCHAR) + '</li>
+                            <li><strong>Nome:</strong> ' + CAST(@POWER_PLANT_NAME AS VARCHAR) + '</li>
+                            <li><strong>Tipo:</strong> ' + CAST(@POWER_PLANT_TYPE_NAME AS VARCHAR) + '</li>
+                            <li><strong>Status:</strong> ' + CAST(@POWER_PLANT_STATUS_ID AS VARCHAR) + ' - ' + CAST(@POWER_PLANT_STATUS_NAME AS VARCHAR) + '</li>
+                            <li><strong>Company ID:</strong> ' + CAST(@POWER_PLANT_COMPANY_ID AS VARCHAR) + '</li>
+                            <li><strong>Data de Instalação:</strong> ' + CAST(@POWER_PLANT_INSTALLATION_DATE AS VARCHAR) + '</li>
+                            <li><strong>Localização:</strong> ' + CAST(@POWER_PLANT_LOCATION AS VARCHAR) + '</li>
+                            <li><strong>Capacidade Máxima:</strong> ' + CAST(@POWER_PLANT_MAX_OUTPUT_CAPACITY AS VARCHAR) + '</li>
+                            <li><strong>Última Manutenção:</strong> ' + CAST(@POWER_PLANT_LAST_MAINTENANCE_DATE AS VARCHAR) + '</li>
+                            <li><strong>Próxima Manutenção:</strong> ' + CAST(@POWER_PLANT_NEXT_MAINTENANCE_DATE AS VARCHAR) + '</li>
+                        </ul>
+
+                        <h2 style="font-size:18px; color:#131314; border-bottom:1px solid #eeeeee; padding-bottom:6px;">Balanço energético</h2>
+                        <ul style="list-style:none; padding-left:0; line-height:1.8;">
                             <li><strong>Produção Total (última semana):</strong> ' + CAST(@LOG_POWER_OUTPUT AS VARCHAR) + ' kWh</li>
                             <li><strong>Consumo Total (última semana):</strong> ' + CAST(@LOG_POWER_CONSUMPTION AS VARCHAR) + ' kWh</li>
                             <li><strong>Armazenamento Total (última semana):</strong> ' + CAST(@LOG_POWER_STORAGE AS VARCHAR) + ' kWh</li>
                             <li><strong>Desperdício Energético:</strong> ' + CAST(dbo.FN_CALC_WASTED_ENERGY(@LOG_POWER_OUTPUT, @LOG_POWER_CONSUMPTION, @LOG_POWER_STORAGE) AS VARCHAR) + ' kWh (' + CAST(dbo.FN_CALC_PERCENTAGE(@LOG_POWER_OUTPUT, dbo.FN_CALC_WASTED_ENERGY(@LOG_POWER_OUTPUT, @LOG_POWER_CONSUMPTION, @LOG_POWER_STORAGE)) AS VARCHAR) + '% da energia total produzida)</li>
                         </ul>
+                        <hr/>
                         <p style="margin-top:30px;">Com os melhores cumprimentos,</p>
-                        <p><strong style="color:#00ACC1;">A equipa Morpheus Engine</strong></p>
-                        <p style="font-size:13px; color:#AAAAAA; border-top:1px solid #444; padding-top:20px; margin-top:30px;">
+                        <p><strong>A equipa Morpheus Engine.</strong></p>
+
+                        <p style="font-size:12px; color:#131314; margin-top:40px; border-top:1px solid #dddddd; padding-top:20px;">
                             Esta mensagem foi gerada automaticamente pelos sistemas informáticos da Morpheus Engine. Por favor, não responda a este e-mail.
                         </p>
                         </td>
@@ -181,7 +195,7 @@ BEGIN
             </html>'
 
         EXEC msdb.dbo.sp_send_dbmail
-            @profile_name = 'Web client 1',
+            @profile_name = 'MORPHEUS_ENGINE_NOREPLY_BOT',
             @recipients = @EMAIL,
             @copy_recipients = '',
             @blind_copy_recipients = '',
@@ -208,25 +222,3 @@ BEGIN
     CLOSE _cursor
     DEALLOCATE _cursor
 END
-
-EXEC GENERATE_AND_SEND_POWER_FLUX_REPORT
-SELECT * FROM POWER_FLUX_LOGS (NOLOCK)
-SELECT * FROM VW_POWER_PLANTS (NOLOCK)
-
-INSERT INTO POWER_FLUX_LOGS (
-    LOG_SOURCE_ID,
-    LOG_POWER_OUTPUT,
-    LOG_POWER_CONSUMPTION,
-    LOG_POWER_STORAGE,
-    LOG_TIME
-) VALUES (
-    1, -- Example Power Plant ID
-    1000.0, -- Example Power Output
-    800.0, -- Example Power Consumption
-    200.0, -- Example Power Storage
-    GETDATE() -- Current Time
-);
-
-SELECT * FROM POWER_PLANT_TYPE (NOLOCK)
-SELECT * FROM VW_USERS_FULL_INFORMATION (NOLOCK)
-UPDATE USERS SET USER_EMAIL = 'eduardoxaviersa@gmail.com'
