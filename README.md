@@ -261,4 +261,4 @@ This project is licensed under the **Apache License 2.0**. See [LICENSE](LICENSE
 
 ---
 
-Developed by [Eduardo Sá](https://github.com/eduard0sa) and [Rafael Silva](https://github.com/rafaelribsilva5).
+Developed by [Eduardo Sá](https://github.com/eduard0sa) and [Rafael Silva](https://github.com/rafaelribsilva5)!
