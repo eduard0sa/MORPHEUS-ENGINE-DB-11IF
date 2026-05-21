@@ -10,10 +10,10 @@ GO
 EXECUTE msdb.dbo.sysmail_add_account_sp  
     @account_name = 'MORPHEUS_ENGINE_NOREPLY_BOT_ACCOUNT',
     @description = 'Mail account for noreply emails from Morpheus Engine',
-    @email_address = 'eduardoxaviersa@gmail.com',
+    @email_address = '$(MAILSERVER_EMAIL)',
     @display_name = 'MORPHEUS ENGINE (NO_REPLY)',
     @mailserver_name = '$(MAILSERVER_HOSTNAME)',
-    @port = 587,
+    @port = '$(MAILSERVER_PORT)',
     @username = '$(MAILSERVER_USERNAME)',
     @password = '$(MAILSERVER_PASSWORD)',
     @enable_ssl = 1;
